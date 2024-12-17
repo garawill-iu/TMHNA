@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}Project Description {% endblock %}
+
+{% block style %}
+
+.des-class {
+    margin: 10px 20px;
+    font-size: 1.25rem;
+
+}
+
+.des-class h1 {
+    font-size: 2.5rem;
+}
+
+.textbox-container {
+    display: flex; /* Enables side-by-side layout */
+    gap: 20px; /* Adds space between the two textboxes */
+    margin-top: 20px; /* Adds spacing above the textboxes */
+}
+
+.textbox {
+    flex: 1; /* Ensures equal width for both textboxes */
+    justify-content: center; /* Center the .des-buttons horizontally */
+    align-items: center; /* Center the .des-buttons vertically */
+    flex-direction: column; /* Ensure the content inside the .textbox is stacked */
+    height: 100%; /* Take up available space for proper centering */
+}
+
+textarea {
+    width: 90%; /* Makes the textarea stretch to full width */
+    padding: 10px;
+    border: none; /* Removes border */
+    background-color: #f9f9f9; /* Matches the content area */
+    font-family: inherit;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    resize: none; /* Prevents resizing of the textarea */
+    color: #333; /* Ensures text color is consistent */
+    margin-bottom: 15px;
+}
+
+textarea[disabled] {
+    background-color: #f1f1f1; /* Light gray to indicate disabled state */
+}
+
+.rice {
+    padding-top: 15px;
+}
+
+.bigtext {
+    font-size: 1.5rem;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+.des-buttons {
+    display: flex; /* Enable Flexbox */
+    flex-direction: column; /* Stack buttons vertically */
+    justify-content: center; /* Center buttons vertically within the container */
+    align-items: center; /* Center buttons horizontally within the container */
+    gap: 10px; /* Add spacing between buttons */
+    height: 100%; /* Ensure the container takes the full height of its parent */
+}
+
+.textbox h1 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+
+.des-buttons button {
+    width: 200px; /* Set a fixed width for the buttons */
+    height: 50px; /* Set a consistent height */
+    font-size: 1rem; /* Adjust font size */
+    border: none; /* Remove border */
+    color: white; /* Set text color */
+    border-radius: 5px; /* Optional: Add rounded corners */
+    cursor: pointer; /* Add pointer cursor */
+    text-align: center; /* Center text within the button */
+}
+
+.des-buttons button:hover {
+    background-color: #0056b3; /* Darker background on hover */
+}
+
+.approve-btn{
+    background-color: green;
+}
+
+.reject-btn{
+    background-color: #dc3545;
+}
+
+.info-btn{
+    background-color: #007bff;
+}
+
+
+
+
+
+{% endblock %}
+
+{% block pagetitle %}
+Description for Project: <strong>{{message.Project_Name}}</strong>
+{% endblock %}
+
+{% block content %}
+<div class="des-class">
+    <h1>Project: {{message.Project_Name}}</h1>
+    <div class="textbox-container">
+        <div class="textbox">
+            <strong>Employee Name: </strong>{{message.Employee_Name}} <br>
+            <strong>Manager Needed for Approval: </strong>{{message.Manager_Name}}<br>
+            <div class="bigtext">
+               <strong class="highlight">Expected ROI:</strong> {{message.Expected_ROI}}
+            </div>
+
+            <div class="rice">
+                <strong>Reach: </strong>{{message.Reach}}<br>
+
+                {% if message.Impact == 5 %}
+                    <strong>Impact: </strong>5 - Very Strong<br>
+                {% elif message.Impact == 4 %}
+                    <strong>Impact: </strong>4 - Strong<br>
+                {% elif message.Impact == 3 %}
+                    <strong>Impact: </strong>3 - Medium<br>
+                {% elif message.Impact == 2 %}
+                    <strong>Impact: </strong>2 - Weak<br>
+                {% else %}
+                    <strong>Impact: </strong>1 - Very Weak<br>
+                {% endif %}
+
+                {% if message.Confidence == 1 %}
+                    <strong>Confidence: </strong>100%<br>
+                {% elif message.Confidence == 0.8 %}
+                    <strong>Confidence: </strong>80%<br>
+                {% else %}
+                    <strong>Confidence: </strong>50%<br>
+                {% endif %}
+
+                {% if message.Effort == 5 %}
+                    <strong>Effort: </strong>5 - Very High<br>
+                {% elif message.Effort == 4 %}
+                    <strong>Effort: </strong>4 - High<br>
+                {% elif message.Effort == 3 %}
+                    <strong>Effort: </strong>3 - Medium<br>
+                {% elif message.Effort == 2 %}
+                    <strong>Effort: </strong>2 - Low<br>
+                {% else %}
+                    <strong>Effort: </strong>1 - Very Low<br>
+                {% endif %}
+
+                <div class="bigtext">
+                    <strong class="highlight">RICE Score:</strong> {{message.Rice_Score}}<br>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="textbox">
+            <strong>Description:</strong>
+            <textarea id="descripdescrip" disabled>{{message.Description}}</textarea>
+            <strong>Risks:</strong>
+            <textarea id="descriprisks" disabled>{{message.Potential_Risks}}</textarea>
+            <strong>Estimated Resources:</strong>
+            <textarea id="descripresources" disabled>{{message.Expected_Resources_Needed}}</textarea>
+
+        </div>
+        <div class="textbox">
+            <h1>Project Functions</h1>
+            <div class="des-buttons">
+                <button class="approve-btn" onclick="location.href='/approve/{{message.Project_Name}}'">Approve</button>
+                <button class="reject-btn" onclick="location.href='/reject/{{message.Project_Name}}'">Reject</button>
+                <button class="info-btn" onclick="location.href='/needsinfo/{{message.Project_Name}}'">Needs More Information</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

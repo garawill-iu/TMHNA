@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMHNA Unified Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/dashboardstyles.css">
+</head>
+<body>
+    <header>
+        <div class="nav-pic">
+            <img src="/static/images/logo2.png" alt="TMH_Logo">
+        </div>
+
+        <div class="nav-header">
+            <h1>TMHNA Unified Dashboard</h1>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="/" class="{% if request.path == '/' %}active{% endif %}">RICE Dashboard</a>
+            <a href="/addproject" class="{% if request.path == '/addproject' %}active{% endif %}">Add Project</a>
+            <a href="/dashboard" class="{% if request.path == '/dashboard' %}active{% endif %}">TMHNA SSOT Dashboard</a>
+            <a href="/logout">Logout</a>
+        </div>
+        <div class="login-name">
+            {% if 'user_id' in session %}
+                {{session['user_name']}} - {{session['role']}}
+            {% endif %}
+        </div>
+    </nav>
+    <main class="container my-4">
+        <!-- Filters Section -->
+        <div class="d-flex justify-content-end mb-4">
+            <select id="yearFilter" class="form-select w-25 me-2" aria-label="Select Year">
+                <option selected value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+            </select>
+            <select id="subsidiaryFilter" class="form-select w-25" aria-label="Select Subsidiary">
+                <option selected value="TMH">TMH</option>
+                <option value="Raymond">Raymond</option>
+                <option value="TMHNA">TMHNA</option>
+            </select>
+        </div>
+
+        <!-- Executive Overview -->
+        <div class="row text-center mb-4">
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card text-white bg-danger h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Revenue (YTD)</h5>
+                        <p id="revenueText" class="card-text fs-4">$4.5M</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card text-white bg-secondary h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Maintenance Costs</h5>
+                        <p id="maintenanceText" class="card-text fs-4">$1.2M</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card text-white bg-dark h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Fleet Utilization</h5>
+                        <p id="utilizationText" class="card-text fs-4">85%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card text-white bg-danger h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Overdue Projects</h5>
+                        <p id="projectsText" class="card-text fs-4">8</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Fleet Utilization Trends</h5>
+                        <canvas id="fleetUtilizationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Maintenance Cost Breakdown</h5>
+                        <canvas id="maintenanceCostChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Revenue by Product Line</h5>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Kaizen Participation</h5>
+                        <canvas id="kaizenChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Inventory Turnover Rate</h5>
+                        <canvas id="inventoryTurnoverChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Asset Downtime by Category</h5>
+                        <canvas id="downtimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Policy Implementation Progress</h5>
+                        <canvas id="policyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Real-Time Alerts</h5>
+                        <canvas id="alertsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        Copyright © Team 15, Jidoka Group
+    </footer>
+
+    <script src="/static/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}Add Project to Dashboard{% endblock %}
+		
+{% block meta %}
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block style %}
+        form {
+            width: 500px;
+            margin: 25 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+			font-family: sans-serif;
+			font-size: 14px;
+        }
+		
+		textarea {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 15px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-family: sans-serif;
+			font-size: 14px;
+			box-sizing: border-box;
+		}
+
+        .error {
+            color: red;
+            font-size: 12px;
+			margin-top: -8px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .success {
+            color: green;
+        }
+		
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        label {
+            font-family: sans-serif;
+		}
+
+        button:hover {
+            background-color: #45a049;
+        }
+{% endblock %}
+
+{% block pagetitle %}
+Add Project to RICE Dashboard
+{% endblock %}
+
+{% block content %}
+
+	<form id="Form" action="/addproject" onsubmit="return validateForm()" method="post">
+		<label for="name">Project Name *</label>
+		<input type="text" id="name" name="name">
+		<span id="nameError" class="error"></span>
+
+		<label for="description">Project Description *</label>
+		<textarea id="description" name="description" rows="4" cols="57"></textarea>
+		<span id="descriptionError" class="error"></span>
+
+        <label for="roi">Expected ROI (Type Number Without %) *:</label>
+        <input type="number" id="roi" name="roi" step="0.01">
+        <span id="roiError" class="error"></span>
+
+        <label for="risks">Potential Risks: *</label>
+		<textarea id="risks" name="risks" rows="4" cols="57"></textarea>
+		<span id="risksError" class="error"></span>
+
+        <label for="resources">Expected Resources Needed: *</label>
+		<textarea id="resources" name="resources" rows="4" cols="57"></textarea>
+		<span id="resourcesError" class="error"></span>
+		
+		<label for="reach">Reach *</label>
+		<input type="number" id="reach" name="reach" step="1">
+		<span id="reachError" class="error"></span>
+		
+		<label for="impact">Impact *</label>
+		<select id="impact" name="impact">
+            <option value="" disabled selected></option>
+            <option value="5">5 - Very High</option>
+            <option value="4">4 - High</option>
+            <option value="3">3 - Medium</option>
+            <option value="2">2 - Low</option>
+            <option value="1">1 - Very Low</option>
+        </select>
+        <span id="impactError" class="error"></span>
+		
+		<label for="confidence">Confidence *</label>
+		<select id="confidence" name="confidence">
+            <option value="" disabled selected></option>
+			<option value="1">100% - High Confidence</option>
+			<option value=".8">80% - Medium Confidence</option>
+			<option value=".5">50% - Low Confidence</option>
+		</select>
+        <span id="confidenceError" class="error"></span>
+
+        <label for="effort">Effort *</label>
+        <select id="effort" name="effort">
+            <option value="" disabled selected></option>
+            <option value="5">5 - Very High</option>
+            <option value="4">4 - High</option>
+            <option value="3">3 - Medium</option>
+            <option value="2">2 - Low</option>
+            <option value="1">1 - Very Low</option>
+        </select>
+        <span id="effortError" class="error"></span>
+
+		<button type="submit">Submit</button>
+	</form>
+
+	<script>
+        function validateForm() {
+            // Clear previous error messages
+            document.getElementById('nameError').textContent = "";
+            document.getElementById('descriptionError').textContent = "";
+            document.getElementById('roiError').textContent = "";
+            document.getElementById('risksError').textContent = "";
+            document.getElementById('resourcesError').textContent = "";
+			document.getElementById('reachError').textContent = "";
+			document.getElementById('impactError').textContent = "";
+			document.getElementById('confidenceError').textContent = "";
+			document.getElementById('effortError').textContent = "";
+
+            // Get form values
+            var name = document.getElementById('name').value;
+            var description = document.getElementById('description').value;
+            var roi = document.getElementById('roi').value;
+            var risks = document.getElementById('risks').value;
+            var resources = document.getElementById('resources').value;
+			var reach = document.getElementById('reach').value;
+			var impact = document.getElementById('impact').value;
+			var confidence = document.getElementById('confidence').value;
+			var effort = document.getElementById('effort').value;
+
+            if (name.trim() === "") {
+                document.getElementById('nameError').textContent = "Project Name is required.";
+                return false;
+            }
+
+            if (description.trim() === "") {
+                document.getElementById('descriptionError').textContent = "Project Description is required.";
+                return false;
+            }
+
+            if (roi.trim() === "") {
+                document.getElementById('roiError').textContent = "Expected ROI is required.";
+                return false;
+            }
+
+            if (risks.trim() === "") {
+                document.getElementById('risksError').textContent = "Description of Potential Risks is required.";
+                return false;
+            }
+
+            if (resources.trim() === "") {
+                document.getElementById('resourcesError').textContent = "Description of Expected Resources Needed is required.";
+                return false;
+            }
+
+			if (reach.trim() === "") {
+				document.getElementById('reachError').textContent = "Reach Score is required.";
+				return false;
+			}
+
+			if (impact.trim() === "") {
+				document.getElementById('impactError').textContent = "Impact Score is required.";
+				return false;
+			}
+
+			if (confidence.trim() === "") {
+				document.getElementById('confidenceError').textContent = "Confidence Score is required.";
+				return false;
+			}
+
+			if (effort.trim() === "") {
+				document.getElementById('effortError').textContent = "Effort Score is required.";
+				return false;
+			}
+
+            return true; // Allow form submission
+        }
+    </script>
+
+
+{% endblock %}

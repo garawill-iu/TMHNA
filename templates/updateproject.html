@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}TMH RICE Prioritization Dashboard {% endblock %}
+		
+{% block style %}
+
+	main {
+		padding-top: 5px;
+	}
+
+	h2 {
+		text-size: 10px;
+		font-family: sans-serif;
+	}
+
+	form {
+            width: 500px;
+            margin: 25 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+			font-family: sans-serif;
+			font-size: 14px;
+        }
+
+		textarea {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 15px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-family: sans-serif;
+			font-size: 14px;
+			box-sizing: border-box;
+		}
+
+        .error {
+            color: red;
+            font-size: 12px;
+			margin-top: -8px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .success {
+            color: green;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        label {
+            font-family: sans-serif;
+		}
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+
+
+			
+{% endblock %}
+	
+{% block content %}
+	<h2 style="font-size: 40px;" >Edit Project</h2>
+
+	<form id="EditForm" method="post">
+
+		<label for="name">Project Name *</label>
+		<input type="text" id="name" name="name" value="{{message.Project_Name}}">
+		<span id="nameError" class="error"></span>
+
+		<label for="description">Project Description *</label>
+		<textarea id="description" name="description" rows="4" cols="57">{{message.Description}}</textarea>
+		<span id="descriptionError" class="error"></span>
+
+		<label for="ROI">Expected ROI *:</label>
+        <input type="number" id="ROI" name="ROI" step="0.01" value="{{message.Expected_ROI}}">
+        <span id="roiError" class="error"></span>
+
+        <label for="risks">Potential Risks: *</label>
+		<textarea id="risks" name="risks" rows="4" cols="57">{{message.Potential_Risks}}</textarea>
+		<span id="risksError" class="error"></span>
+
+        <label for="resources">Expected Resources Needed: *</label>
+		<textarea id="resources" name="resources" rows="4" cols="57">{{message.Expected_Resources_Needed}}</textarea>
+		<span id="resourcesError" class="error"></span>
+
+		<label for="reach">Reach *</label>
+		<input type="number" id="reach" name="reach" step="1" value="{{message.Reach}}">
+		<span id="reachError" class="error"></span>
+
+		<label for="impact">Impact *</label>
+		<select id="impact" name="impact">
+			<option value="" disabled selected></option>
+			<option value="5">5 - Very High</option>
+			<option value="4">4 - High</option>
+			<option value="3">3 - Medium</option>
+			<option value="2">2 - Low</option>
+			<option value="1">1 - Very Low</option>
+		</select>
+		<span id="impactError" class="error"></span>
+
+		<label for="confidence">Confidence *</label>
+		<select id="confidence" name="confidence">
+			<option value="" disabled selected></option>
+			<option value="1">100% - High Confidence</option>
+			<option value=".8">80% - Medium Confidence</option>
+			<option value=".5">50% - Low Confidence</option>
+		</select>
+		<span id="confidenceError" class="error"></span>
+
+		<label for="effort">Effort *</label>
+		<select id="effort" name="effort">
+			<option value="" disabled selected></option>
+			<option value="5">5 - Very High</option>
+			<option value="4">4 - High</option>
+			<option value="3">3 - Medium</option>
+			<option value="2">2 - Low</option>
+			<option value="1">1 - Very Low</option>
+		</select>
+		<span id="effortError" class="error"></span>
+
+		<button type="submit">Submit</button>
+
+	</form>
+
+	<script>
+
+
+
+
+	</script>
+
+
+{% endblock %}
